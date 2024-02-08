@@ -15,11 +15,11 @@ const processingRecording = (recording, io) => {
           return;
         }
 
-        io.emit('onStatusUpdate', recording);
+        io.emit('onStatusUpdate', { ...recording, status: 'DONE' });
         console.log('Status update');
       }
     );
-  }, 8000);
+  }, processingTime);
 };
 
 module.exports = processingRecording;
