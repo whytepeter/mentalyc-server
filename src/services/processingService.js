@@ -19,7 +19,7 @@ const processingRecording = (recording, io) => {
         console.log('Status update');
       }
     );
-  }, processingTime);
+  }, 8000);
 };
 
 module.exports = processingRecording;

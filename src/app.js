@@ -2,20 +2,20 @@ const express = require('express');
 const cors = require('cors');
 const { createServer } = require('http');
 const { Server } = require('socket.io');
-const uploadController = require('./controllers/uploadController');
+
 const {
-  getAllRecordings,
-  addRecording,
-} = require('./controllers/recordingController');
+  handleUpload,
+  processUpload,
+} = require('./controllers/uploadController');
+const { getAllRecordings } = require('./controllers/recordingController');
 
 const app = express();
-
 app.use(cors());
-
 app.use(express.json());
 
-const port = 8000;
 const httpServer = createServer(app);
+
+//Socket connect
 const io = new Server(httpServer, {
   cors: {
     origin: 'http://localhost:3000',
@@ -25,17 +25,18 @@ const io = new Server(httpServer, {
   },
 });
 
+io.on('connection', (socket) => {
+  console.log('Client connected:', socket.id);
+});
+
 app.set('io', io);
 
-// app.post('/add', addRecording);
+app
+  .route('/recordings')
+  .get(getAllRecordings)
+  .post(handleUpload, processUpload);
 
-app.post(
-  '/recordings',
-  uploadController.handleUpload,
-  uploadController.processUpload
-);
-app.get('/recordings', getAllRecordings);
-
+const port = 8000;
 httpServer.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
