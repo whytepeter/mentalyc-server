@@ -1,6 +1,7 @@
 const multer = require('multer');
 const { db } = require('../services/databaseService');
 const processingRecording = require('../services/processingService');
+const { randomeRange } = require('../utils');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -37,11 +38,14 @@ const processUpload = async (req, res) => {
 
         processingRecording(recording, io);
 
-        res.status(200).json({
-          success: true,
-          message: 'Recording uploaded successfully',
-          data: recording,
-        });
+        const uploadingTime = randomeRange(10000, 30000);
+        setTimeout(() => {
+          res.status(200).json({
+            success: true,
+            message: 'Recording uploaded successfully',
+            data: recording,
+          });
+        }, uploadingTime);
       }
     );
   } catch (error) {

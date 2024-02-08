@@ -1,8 +1,8 @@
 const { db } = require('../services/databaseService');
-const { getRandomInt } = require('../utils');
+const { randomeRange } = require('../utils');
 
 const processingRecording = (recording, io) => {
-  const processingTime = getRandomInt(60000, 180000);
+  const processingTime = randomeRange(60000, 180000);
   console.log('PROCESSING TIME', processingTime);
 
   setTimeout(async () => {
