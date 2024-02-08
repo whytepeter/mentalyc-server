@@ -1,12 +1,9 @@
-const multer = require('multer');
-const { db } = require('../services/databaseService');
+const { db } = require('../config/db.config');
 const processingRecording = require('../services/processingService');
-const { randomeRange } = require('../utils');
+const { randomeRange, convertToMP3 } = require('../utils');
+const { multerInstance } = require('../config/multer.config');
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-
-const handleUpload = upload.single('audio');
+const handleUpload = multerInstance.single('audio');
 
 const processUpload = async (req, res) => {
   try {
@@ -20,14 +17,17 @@ const processUpload = async (req, res) => {
       });
     }
 
+    const { filename } = req.file;
+    const mp3 = await convertToMP3(filename);
     const status = 'PROCESSING';
-    const recording = { name, timestamp, length, status };
+    const recording = { name, timestamp, length, status, mp3 };
 
     db.run(
-      'INSERT INTO recordings (name, timestamp, length, status) VALUES (?, ?, ?, ?)',
-      [name, timestamp, length, status],
+      'INSERT INTO recordings (name, timestamp, length, status, mp3) VALUES (?, ?, ?, ?, ?)',
+      [name, timestamp, length, status, mp3],
       function (err) {
         if (err) {
+          console.log('Error', err.message);
           res.status(500).json({ success: false, message: err.message });
           return;
         }
@@ -38,12 +38,12 @@ const processUpload = async (req, res) => {
 
         processingRecording(recording, io);
 
-        const uploadingTime = randomeRange(10000, 30000);
+        const uploadingTime = randomeRange(10000, 28000);
         setTimeout(() => {
           res.status(200).json({
             success: true,
             message: 'Recording uploaded successfully',
-            data: recording,
+            data: null,
           });
         }, uploadingTime);
       }

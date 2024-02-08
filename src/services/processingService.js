@@ -1,4 +1,4 @@
-const { db } = require('../services/databaseService');
+const { db } = require('../config/db.config');
 const { randomeRange } = require('../utils');
 
 const processingRecording = (recording, io) => {
