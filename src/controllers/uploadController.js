@@ -38,14 +38,11 @@ const processUpload = async (req, res) => {
 
         processingRecording(recording, io);
 
-        const uploadingTime = randomeRange(10000, 28000);
-        setTimeout(() => {
-          res.status(200).json({
-            success: true,
-            message: 'Recording uploaded successfully',
-            data: null,
-          });
-        }, uploadingTime);
+        res.status(200).json({
+          success: true,
+          message: 'Recording uploaded successfully',
+          data: null,
+        });
       }
     );
   } catch (error) {
