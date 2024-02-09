@@ -18,13 +18,14 @@ const processUpload = async (req, res) => {
     }
 
     const { filename } = req.file;
-    const mp3 = await convertToMP3(filename);
+    await convertToMP3(filename); //covert and store the audio
+    const audioUrl = `http://localhost:8000/uploads/audios/${filename}.mp3`;
     const status = 'PROCESSING';
-    const recording = { name, timestamp, length, status, mp3 };
+    const recording = { name, timestamp, length, status, audioUrl };
 
     db.run(
-      'INSERT INTO recordings (name, timestamp, length, status, mp3) VALUES (?, ?, ?, ?, ?)',
-      [name, timestamp, length, status, mp3],
+      'INSERT INTO recordings (name, timestamp, length, status, audioUrl) VALUES (?, ?, ?, ?, ?)',
+      [name, timestamp, length, status, audioUrl],
       function (err) {
         if (err) {
           console.log('Error', err.message);
@@ -38,11 +39,17 @@ const processUpload = async (req, res) => {
 
         processingRecording(recording, io);
 
-        res.status(200).json({
-          success: true,
-          message: 'Recording uploaded successfully',
-          data: null,
-        });
+        //Simulate Uploading time
+
+        const uploadingTime = randomeRange(10000, 30000);
+
+        setTimeout(() => {
+          res.status(200).json({
+            success: true,
+            message: 'Recording uploaded successfully',
+            data: null,
+          });
+        }, uploadingTime);
       }
     );
   } catch (error) {

@@ -1,6 +1,4 @@
-# Mentalyc
-
-[Hosted here](https://mentalyc-server.onrender.com)
+# Mentalyc Api
 
 ## How to run locally
 

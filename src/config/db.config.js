@@ -18,7 +18,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
       timestamp TEXT NOT NULL,
       length TEXT NOT NULL,
       status TEXT NOT NULL,
-      mp3 TEXT NOT NULL
+      audioUrl TEXT NOT NULL
     );`,
       (err) => {
         if (err) {
