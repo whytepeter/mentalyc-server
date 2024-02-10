@@ -40,7 +40,6 @@ const processUpload = async (req, res) => {
         processingRecording(recording, io);
 
         //Simulate Uploading time
-
         const uploadingTime = randomeRange(10000, 30000);
 
         setTimeout(() => {
