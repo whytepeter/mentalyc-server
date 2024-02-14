@@ -19,7 +19,8 @@ const processUpload = async (req, res) => {
 
     const { filename } = req.file;
     await convertToMP3(filename); //covert and store the audio
-    const audioUrl = `http://localhost:8000/uploads/audios/${filename}.mp3`;
+    const audioUrl = `uploads/audios/${filename}.mp3`;
+
     const status = 'PROCESSING';
     const recording = { name, timestamp, length, status, audioUrl };
 
@@ -39,16 +40,11 @@ const processUpload = async (req, res) => {
 
         processingRecording(recording, io);
 
-        //Simulate Uploading time
-        const uploadingTime = randomeRange(10000, 30000);
-
-        setTimeout(() => {
-          res.status(200).json({
-            success: true,
-            message: 'Recording uploaded successfully',
-            data: null,
-          });
-        }, uploadingTime);
+        res.status(200).json({
+          success: true,
+          message: 'Recording uploaded successfully',
+          data: null,
+        });
       }
     );
   } catch (error) {
