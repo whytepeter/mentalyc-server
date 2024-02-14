@@ -2,7 +2,7 @@ const multer = require('multer');
 const path = require('path');
 
 // Ensure that the directory for uploads exists
-const uploadDir = path.join(__dirname, '../../uploads');
+const uploadDir = path.join(__dirname, '../uploads');
 
 // Set up Multer storage
 const storage = multer.diskStorage({

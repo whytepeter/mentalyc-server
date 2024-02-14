@@ -8,12 +8,9 @@ exports.randomeRange = (min, max) => {
 };
 
 exports.convertToMP3 = (filename) => {
-  console.log('DIRNAME', __dirname);
   const uploadDir = path.join(__dirname, '../uploads/audios');
   const inputFilePath = path.join(__dirname, '../uploads', filename);
   const outputFilePath = path.join(uploadDir, `${filename}.mp3`);
-
-  console.log(uploadDir, '---', inputFilePath, '---', outputFilePath);
 
   return new Promise((resolve, reject) => {
     ffmpeg(inputFilePath)
