@@ -1,6 +1,6 @@
 const { db } = require('../config/db.config');
 const processingRecording = require('../services/processingService');
-const { randomeRange, convertToMP3 } = require('../utils');
+const { convertToMP3 } = require('../utils');
 const { multerInstance } = require('../config/multer.config');
 
 const handleUpload = multerInstance.single('audio');
