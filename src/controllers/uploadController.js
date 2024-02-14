@@ -18,7 +18,7 @@ const processUpload = async (req, res) => {
     }
 
     const { filename } = req.file;
-    await convertToMP3(filename); //covert and store the audio
+    // await convertToMP3(filename); //covert and store the audio
     const audioUrl = `uploads/audios/${filename}.mp3`;
 
     const status = 'PROCESSING';
