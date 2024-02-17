@@ -20,3 +20,9 @@ exports.convertToMP3 = (filename) => {
       .save(outputFilePath);
   });
 };
+
+exports.formatDate = (timestamp) => {
+  let dateString = timestamp.split(',')[0];
+  const [day, month, year] = dateString.split('/');
+  return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+};
