@@ -1,6 +1,6 @@
 const { db } = require('../config/db.config');
 const processingRecording = require('../services/processingService');
-const { randomeRange, convertToMP3 } = require('../utils');
+const { convertToMP3 } = require('../utils');
 const { multerInstance } = require('../config/multer.config');
 
 const handleUpload = multerInstance.single('audio');
@@ -19,7 +19,8 @@ const processUpload = async (req, res) => {
 
     const { filename } = req.file;
     await convertToMP3(filename); //covert and store the audio
-    const audioUrl = `http://localhost:8000/uploads/audios/${filename}.mp3`;
+    const audioUrl = `uploads/audios/${filename}.mp3`;
+
     const status = 'PROCESSING';
 
     const recording = {

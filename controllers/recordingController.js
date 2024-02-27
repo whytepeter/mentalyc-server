@@ -1,4 +1,6 @@
+const moment = require('moment');
 const { db } = require('../config/db.config');
+const { formatDate } = require('../utils');
 
 const getRecordings = async (req, res) => {
   try {
@@ -10,9 +12,10 @@ const getRecordings = async (req, res) => {
       }
 
       let recordings = rows || [];
+
       if (recordings.length) {
         recordings = rows.sort(
-          (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+          (a, b) => formatDate(b.timestamp) - formatDate(a.timestamp)
         );
       }
 
